@@ -17,7 +17,7 @@ const ThoughtSchema = new Schema({
         type: String,
         required: true
     },
-    reactions: []     /*reactions(these are like replies)
+    reactions: [ReactionSchema]     /*reactions(these are like replies)
                        - Array of nested documents created with the reactionSchema */
 },
 {
