@@ -61,19 +61,54 @@ const userController = {
        })
        .catch(err => res.status(400).json(err));
    },
-}
+   // DELETE to remove a user by its _id - /api/users/:id
+   // BONUS: Remove a user's associated thoughts when deleted +++++++++++++++++ INCOMPLETE
+   deleteUser({ params }, res) {
+       User.findOneAndDelete({ _id: params.id })
+        .then(dbUserData => {
+            if (!dbUserData) {
+                res.status(404).json({ message: 'User does not exist' });
+                return;
+            }
+            res.json(dbUserData);
+        })
+        .catch(err => res.status(400).json(err));
+   },
+   // FRIEND ROUTES
 
-// PUT to update a user by its _id
+   // POST add friend - /api/users/:userId/friends/:friendId
+   // POST to add a new friend to a user's friend list
+   addFriend({ params }, res) {
+       User.findOneAndUpdate(
+           { _id: params.userId },
+           { $push: { friends: params.friendsId } },
+           { new: true }
+       )
+       .then(dbUserData => {
+           if (!dbUserData) {
+               res.status(404).json({ message: 'User not found' });
+               return;
+           }
+           res.json(dbUserData);
+       })
+       .catch(err => res.status(400).json(err));
+   },
+   // DELETE to remove a friend from a user's friend list
+   removefriend({ params }, res) {
+       User.findOneAndUpdate(
+           { _id: params.userId },
+           { $pull: { friends: params.friendsId } },
+           { new: true }
+       )
+       .then(dbUserData => {
+           if (!dbUserData) {
+               res.status(404).json({ message: 'User not found' });
+               return;
+           }
+           res.json(dbUserData);
+       })
+       .catch(err => res.status(400).json(err));
+   }
+};
 
-// DELETE to remove a user by its _id
-
-// BONUS: Remove a user's associated thoughts when deleted
-
-// ==================
-// FRIEND ROUTES
-
-// /api/users/:userId/friends/:friendId
-
-// POST to add a new friend to a user's friend list
-
-// DELETE to remove a friend from a user's friend list
+module.exports = userController;
