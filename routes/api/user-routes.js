@@ -22,3 +22,12 @@ POST a new user
 // DELETE to remove a user by its _id
 
 // BONUS: Remove a user's associated thoughts when deleted
+
+// ==================
+// FRIEND ROUTES
+
+// /api/users/:userId/friends/:friendId
+
+// POST to add a new friend to a user's friend list
+
+// DELETE to remove a friend from a user's friend list
