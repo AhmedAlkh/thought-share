@@ -62,7 +62,6 @@ const userController = {
        .catch(err => res.status(400).json(err));
    },
    // DELETE to remove a user by its _id - /api/users/:id
-   // BONUS: Remove a user's associated thoughts when deleted +++++++++++++++++ INCOMPLETE
    deleteUser({ params }, res) {
        User.findOneAndDelete({ _id: params.id })
         .then(dbUserData => {
@@ -94,21 +93,35 @@ const userController = {
        .catch(err => res.status(400).json(err));
    },
    // DELETE to remove a friend from a user's friend list
-   removefriend({ params }, res) {
-       User.findOneAndUpdate(
-           { _id: params.userId },
-           { $pull: { friends: params.friendsId } },
-           { new: true }
-       )
-       .then(dbUserData => {
-           if (!dbUserData) {
-               res.status(404).json({ message: 'User not found' });
-               return;
-           }
-           res.json(dbUserData);
-       })
-       .catch(err => res.status(400).json(err));
-   }
+
+deleteFriend({ params }, res) {
+    User.findOneAndUpdate(
+        { _id: params.userId },
+        { $pull: { friends: params.friendId } },
+        { new: true }
+    )
+    .then(dbUserData => {
+        if (!dbUserData) {
+            res.status(404).json({ message: 'User not found' });
+            return;
+        }
+        User.findOneAndUpdate(
+            { _id: params.friendId },
+            { $pull: { friends: params.userId } },
+            { new: true }
+        )
+        .then(dbUserData2 => {
+            if(!dbUserData2) {
+                res.status(404).json({ message: 'User not found' })
+                return;
+            }
+            res.json({message: 'Friend has been removed'});
+        })
+        .catch(err => res.status(400).json(err));
+    })
+    .catch(err => res.status(400).json(err));
+}
+
 };
 
 module.exports = userController;
