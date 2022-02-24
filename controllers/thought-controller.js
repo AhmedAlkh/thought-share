@@ -105,9 +105,38 @@ deleteThought({ params }, res) {
 // REACTION ROUTES
 // /api/thoughts/:thoughtId/reactions
 // POST to create a reaction stored in a single thought's reactions array field
-
-
+createReaction({params, body}, res) {
+    Thought.findOneAndUpdate(
+      {_id: params.thoughtId}, 
+      {$push: {reactions: body}}, 
+      {new: true, runValidators: true})
+        .populate({path: 'reactions', select: '-__v'})
+        .select('-__v')
+        .then(dbThoughtData => {
+            if (!dbThoughtData) {
+            res.status(404).json({message: 'Thought not found'});
+            return;
+            }
+            res.json(dbThoughtData);
+        })
+        .catch(err => res.status(400).json(err));
+},
 // DELETE to pull and remove a reaction by the reaction's reactionId value
-}
+deleteReaction({ params }, res) {
+    Thought.findOneAndUpdate(
+      { _id: params.thoughtId },
+      { $pull: { reactions: { reactionId: params.reactionId } } },
+      { new: true }
+    )
+      .then(dbThoughtData => {
+        if (!dbThoughtData) {
+        res.status(404).json({ message: 'Thought not found'});
+        return;
+        }
+        res.json(dbThoughtData);
+        })
+        .catch(err => res.status(400).json(err));
+  }
+};
 
 module.exports = thoughtController;
