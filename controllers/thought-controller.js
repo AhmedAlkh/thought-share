@@ -109,3 +109,5 @@ deleteThought({ params }, res) {
 
 // DELETE to pull and remove a reaction by the reaction's reactionId value
 }
+
+module.exports = thoughtController;
