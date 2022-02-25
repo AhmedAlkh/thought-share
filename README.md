@@ -11,7 +11,9 @@ https://user-images.githubusercontent.com/90983346/155756177-4e3e3b09-4371-4751-
 ### User routes
 https://user-images.githubusercontent.com/90983346/155758354-b0c31065-556a-4ef2-9be3-b48756a24fa9.mp4
 ### Thought routes (part 1 and 2)
+p1
 https://user-images.githubusercontent.com/90983346/155761473-25fa2d61-9b47-446d-88dd-3c1d43c491fc.mp4
+p2
 https://user-images.githubusercontent.com/90983346/155761509-225ac494-1322-4fe4-b5be-f2f17354e377.mp4
 ### Friend routes
 https://user-images.githubusercontent.com/90983346/155763106-dd5c6381-8f0a-439b-83b4-270ee75a38f9.mp4
